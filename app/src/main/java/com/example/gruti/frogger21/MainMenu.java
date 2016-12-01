@@ -27,7 +27,7 @@ public class MainMenu extends AppCompatActivity {
 
     //Vytvoření nové hry
     public void ClickNewGame(View view) {
-        Intent LunchNewGame=new Intent(this,GameActivity.class);
+        Intent LunchNewGame=new Intent(this,com.example.gruti.view.GameActivity.class);
         startActivity(LunchNewGame);
     }
 
