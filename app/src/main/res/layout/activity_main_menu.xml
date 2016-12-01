@@ -8,10 +8,36 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.gruti.frogger21.MainMenu">
-
-    <TextView
+    tools:context="com.example.gruti.frogger21.MainMenu"
+    android:background="@drawable/main_page"
+    >
+    <Button
+        android:text="New Game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="119dp"
+        android:id="@+id/bNewGame"
+        android:onClick="ClickNewGame"
+        />
+
+    <Button
+        android:text="Highest Score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:id="@+id/bScore"
+        android:layout_below="@+id/bNewGame"
+        android:layout_centerHorizontal="true"
+        android:onClick="ClickScore"
+        />
+
+    <Button
+        android:text="Exit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="43dp"
+        android:id="@+id/bExit"
+        android:layout_below="@+id/bScore"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
