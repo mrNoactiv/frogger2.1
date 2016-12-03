@@ -38,7 +38,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
     }
 
     void init(Context context) {
-        bmp = new Bitmap[10];
+        bmp = new Bitmap[11];
         bmp[0] = BitmapFactory.decodeResource(getResources(), R.drawable.green);
         bmp[1] = BitmapFactory.decodeResource(getResources(), R.drawable.fire);
         bmp[2] = BitmapFactory.decodeResource(getResources(), R.drawable.wood);
@@ -49,6 +49,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
         bmp[7] = BitmapFactory.decodeResource(getResources(), R.drawable.car_left);
         bmp[8] = BitmapFactory.decodeResource(getResources(), R.drawable.car_right);
         bmp[9] = BitmapFactory.decodeResource(getResources(), R.drawable.stone);
+        bmp[10] = BitmapFactory.decodeResource(getResources(), R.drawable.etin);
 
     }
 

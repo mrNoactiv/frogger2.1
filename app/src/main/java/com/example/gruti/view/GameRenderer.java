@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 
 import com.example.gruti.com.example.gruti.logic.GameLogic;
 import com.example.gruti.frogger21.R;
@@ -18,6 +19,7 @@ public class GameRenderer {
     private GameLogic gameLogic;
     private Point dimensions;
     private Paint backgroundPaint;
+    int size=100;
     Bitmap[] mapa;
     Map<Integer, Bitmap> bitmapBank = new HashMap<>();//dis
 
@@ -38,12 +40,31 @@ public class GameRenderer {
     public void draw(Canvas canvas){
         backgroundPaint.setColor(Color.BLUE);
         canvas.drawRect(0,0, dimensions.x, dimensions.y, backgroundPaint);
-       /* if(gameLogic.isUp){
-            backgroundPaint.setColor(Color.RED);
-            canvas.drawRect(0,0, dimensions.x / 2, dimensions.y / 2, backgroundPaint);
-        }*/
+
+        //vykreslení lvlu
+
+        //první lajna
+        canvas.drawBitmap(mapa[1],null,new Rect(0,0,size,size),backgroundPaint);
+        canvas.drawBitmap(mapa[1],null,new Rect(size,0,size*2,size),backgroundPaint);
+        canvas.drawBitmap(mapa[9],null,new Rect(size*2,0,size*3,size),backgroundPaint);
+        canvas.drawBitmap(mapa[5],null,new Rect(size*2,0,size*3,size),backgroundPaint);//moucha
+        canvas.drawBitmap(mapa[1],null,new Rect(size*3,0,size*4,size),backgroundPaint);
+        canvas.drawBitmap(mapa[9],null,new Rect(size*4,0,size*5,size),backgroundPaint);
+        canvas.drawBitmap(mapa[9],null,new Rect(size*5,0,size*6,size),backgroundPaint);
+        canvas.drawBitmap(mapa[1],null,new Rect(size*6,0,size*7,size),backgroundPaint);
+
+        //voda nahoře
+        canvas.drawBitmap(mapa[3],null,new Rect(0,size,size*7,size*3),backgroundPaint);
+
+
+        //kameny uprostřed
+        canvas.drawBitmap(mapa[9],null,new Rect(0,size*3,size*4,size*4),backgroundPaint);
+
+
         if(gameLogic.isUp) {
-            canvas.drawBitmap(mapa[1],dimensions.x, dimensions.y, backgroundPaint);
+            //canvas.drawBitmap(mapa[1],0, 0, backgroundPaint);
+            canvas.drawBitmap(mapa[4],null,new Rect(180,180,280,280),backgroundPaint);
+
         }
         }
 
