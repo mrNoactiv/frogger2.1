@@ -1,7 +1,7 @@
 package com.example.gruti.com.example.gruti.logic;
 
 
-import com.example.gruti.frogger21.Objects.Car;
+import com.example.gruti.Objects.Car;
 
 import java.util.List;
 

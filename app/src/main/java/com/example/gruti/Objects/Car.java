@@ -1,4 +1,4 @@
-package com.example.gruti.frogger21.Objects;
+package com.example.gruti.Objects;
 
 /**
  * Created by gruti on 01.12.2016.
@@ -13,6 +13,7 @@ package com.example.gruti.frogger21.Objects;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 
 import com.example.gruti.frogger21.R;
 

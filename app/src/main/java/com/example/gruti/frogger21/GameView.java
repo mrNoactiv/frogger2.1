@@ -12,14 +12,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.example.gruti.frogger21.Objects.Car;
+import com.example.gruti.Objects.Car;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 public class GameView extends View implements Runnable {
 
@@ -107,6 +103,7 @@ public class GameView extends View implements Runnable {
         bmp[7] = BitmapFactory.decodeResource(getResources(), R.drawable.car_left);
         bmp[8] = BitmapFactory.decodeResource(getResources(), R.drawable.car_right);
         bmp[9] = BitmapFactory.decodeResource(getResources(), R.drawable.stone);
+
     }
 
 
