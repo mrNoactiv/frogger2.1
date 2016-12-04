@@ -5,18 +5,16 @@ package com.example.gruti.Objects;
  */
 
 public class Hero{
-
-
-
-
     private int posX;
     private int posY;
+    private int lifes;
 
 
-    public Hero(int posX,int posY)
+    public Hero(int posX,int posY,int lifes)
     {
         this.posX=posX;
         this.posY=posY;
+        this.lifes=lifes;
     }
 
     public int getPosX()
@@ -27,6 +25,15 @@ public class Hero{
     public int getPosY()
     {
         return posY;
+    }
+    public int getLifes()
+    {
+        return lifes;
+    }
+
+    public void setLife(int lifes)
+    {
+        this.lifes=lifes;
     }
 
     public void setPosX(int posX)
@@ -42,23 +49,23 @@ public class Hero{
     }
 
 
-    void turnRight() {
-        posX+=50;
+    public void turnRight() {
+        posX+=102;
         System.out.println("aktualni x: "+posX);
     }
 
-    void turnLeft() {
-        posX-=50;
+    public void turnLeft() {
+        posX-=102;
         System.out.println("aktualni x: "+posX);
     }
 
-    void turnUp() {
-        posY-=50;
+    public void turnUp() {
+        posY-=102;
         System.out.println("aktualni y: "+posY);
     }
 
-    void turnDown() {
-        posY+=50;
+    public void turnDown() {
+        posY+=102;
         System.out.println("aktualni y: "+posY);
     }
 }

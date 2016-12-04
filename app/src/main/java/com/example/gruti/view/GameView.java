@@ -5,16 +5,23 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
+import com.example.gruti.com.example.gruti.logic.Event;
 import com.example.gruti.com.example.gruti.logic.GameLogic;
 import com.example.gruti.frogger21.R;
 
-public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Callback, View.OnTouchListener
+public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Callback
 {
     private final SurfaceHolder holder;
     private boolean isRunning;
@@ -23,6 +30,23 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
     private GameRenderer renderer;
     private boolean canDraw;
     Bitmap[] bmp;
+    public Handler mHandler;
+    Message m;
+
+
+
+    Event e=new Event() {
+        @Override
+        public void onDeathListener(String s) {
+            Context context = getContext();
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, s, duration);
+            toast.show();
+        }
+    };
+
+
 
 
 
@@ -30,10 +54,10 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
         super(context);
         init(context);
         drawingThread = new Thread(this);
-        logic = new GameLogic();
+        logic = new GameLogic(e);
         renderer = new GameRenderer(metrics.widthPixels, metrics.heightPixels, logic,bmp);
         holder = getHolder();
-        setOnTouchListener(this);
+
 
     }
 
@@ -53,6 +77,37 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
     }
 
+    public boolean onTouchEvent(MotionEvent event) {
+
+        int eventAction = event.getAction();
+        // you may need the x/y location
+        int x = (int)event.getX();
+        int y = (int)event.getY();
+
+        // put your code in here to handle the event
+        switch (eventAction) {
+            case MotionEvent.ACTION_DOWN:
+
+                if(y<=500)
+                {
+                    logic.hero.turnUp();
+                }
+                else if(y>=600)
+                {
+                    logic.hero.turnDown();
+                }
+                else if(x<=350)
+                {
+                    logic.hero.turnLeft();
+                }
+                else if(x>=400)
+                {
+                    logic.hero.turnRight();
+                }
+                break;
+        }
+        return true;
+    }
 
 
 
@@ -64,15 +119,32 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
     @Override
     public void run() {
+
         while(this.isRunning){
             if(holder.getSurface().isValid()) {
-                logic.update();//p5epo4tz
+                if (logic.update()!=true)//p5epo4tz)
+                {
+                    this.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Context context = getContext();
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(context, "You are ded", duration);
+                            toast.show();
+
+                        }
+                    });
+                    Restart();
+                }
                 Canvas canvas = holder.lockCanvas();
                 renderer.draw(canvas);
                 holder.unlockCanvasAndPost(canvas);
             }
         }
+
     }
+
 
 
     public void stop(){
@@ -84,6 +156,16 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
             //handle it
         }
     }
+    public void Restart()
+    {
+        isRunning=false;
+        int TEMP=logic.hero.getLifes();
+        logic.hero.setLife(TEMP-1);
+        logic.hero.setPosX(102*3);
+        logic.hero.setPosY(102*9);
+
+    }
+
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
@@ -100,9 +182,5 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
         stop();
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        logic.up();
-        return false;
-    }
+
 }

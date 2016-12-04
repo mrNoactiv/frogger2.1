@@ -31,7 +31,11 @@ public class GameRenderer {
         backgroundPaint = new Paint();
         backgroundPaint.setStyle(Paint.Style.FILL);
         mapa=map;
-        //backgroundPaint.setColor(Color.MAGENTA);
+
+
+
+
+
 
        // bitmapBank.put(R.drawable.frog,map.);//dis
     }
@@ -85,9 +89,16 @@ public class GameRenderer {
         //start
         canvas.drawBitmap(mapa[0],null,new Rect(0,size*9,size*7,size*11),backgroundPaint);
 
+
+        //vykreslování žaby
+        canvas.drawBitmap(mapa[4],null,new Rect(gameLogic.hero.getPosX(),gameLogic.hero.getPosY(),gameLogic.hero.getPosX()+size,gameLogic.hero.getPosY()+size),backgroundPaint);
+
+
+
+
         if(gameLogic.isUp) {
             //canvas.drawBitmap(mapa[1],0, 0, backgroundPaint);
-            canvas.drawBitmap(mapa[4],null,new Rect(180,180,280,280),backgroundPaint);
+            //canvas.drawBitmap(mapa[4],null,new Rect(180,180,280,280),backgroundPaint);
 
         }
         }
