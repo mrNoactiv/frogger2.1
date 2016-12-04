@@ -96,11 +96,7 @@ public class GameRenderer {
 
 
 
-        if(gameLogic.isUp) {
-            //canvas.drawBitmap(mapa[1],0, 0, backgroundPaint);
-            //canvas.drawBitmap(mapa[4],null,new Rect(180,180,280,280),backgroundPaint);
 
-        }
         }
 
     }

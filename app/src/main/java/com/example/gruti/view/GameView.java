@@ -38,11 +38,17 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
     Event e=new Event() {
         @Override
         public void onDeathListener(String s) {
-            Context context = getContext();
-            int duration = Toast.LENGTH_SHORT;
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    Context context = getContext();
+                    int duration = Toast.LENGTH_SHORT;
 
-            Toast toast = Toast.makeText(context, s, duration);
-            toast.show();
+                    Toast toast = Toast.makeText(context, "You are ded", duration);
+                    toast.show();
+
+                }
+            });
         }
     };
 
@@ -122,19 +128,9 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
         while(this.isRunning){
             if(holder.getSurface().isValid()) {
-                if (logic.update()!=true)//p5epo4tz)
+                if (logic.update()!=true)//přepočet)
                 {
-                    this.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Context context = getContext();
-                            int duration = Toast.LENGTH_SHORT;
 
-                            Toast toast = Toast.makeText(context, "You are ded", duration);
-                            toast.show();
-
-                        }
-                    });
                     Restart();
                 }
                 Canvas canvas = holder.lockCanvas();
@@ -163,6 +159,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
         logic.hero.setLife(TEMP-1);
         logic.hero.setPosX(102*3);
         logic.hero.setPosY(102*9);
+        isRunning=true;
 
     }
 

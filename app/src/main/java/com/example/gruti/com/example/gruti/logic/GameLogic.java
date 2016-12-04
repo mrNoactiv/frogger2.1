@@ -30,11 +30,6 @@ public class GameLogic {
     }
 
 
-    boolean left;
-    public boolean isUp = false;
-
-
-
     public boolean update() {
 
         hero.getPosX();
@@ -58,12 +53,12 @@ public class GameLogic {
         if(hero.getPosX()>612 || hero.getPosX()<0)
         {
             ok=false;
+            event.onDeathListener("you are ded");
         }
         return ok;
     }
 
-    ////voda nahoře
-    //canvas.drawBitmap(mapa[3],null,new Rect(0,size,size*7,size*3),backgroundPaint);
+
     public boolean checkWater()//nefunguje
     {
         boolean ok=true;
@@ -75,6 +70,7 @@ public class GameLogic {
             }
             else*/
                 ok=false;
+            event.onDeathListener("you are ded");
         }
         else
             ok=true;
