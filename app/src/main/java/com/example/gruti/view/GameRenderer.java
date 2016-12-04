@@ -19,7 +19,7 @@ public class GameRenderer {
     private GameLogic gameLogic;
     private Point dimensions;
     private Paint backgroundPaint;
-    int size=100;
+    int size=102;
     Bitmap[] mapa;
     Map<Integer, Bitmap> bitmapBank = new HashMap<>();//dis
 
@@ -44,6 +44,7 @@ public class GameRenderer {
         //vykreslení lvlu
 
         //první lajna
+        canvas.drawBitmap(mapa[0],null,new Rect(0,0,size*7,size),backgroundPaint);
         canvas.drawBitmap(mapa[1],null,new Rect(0,0,size,size),backgroundPaint);
         canvas.drawBitmap(mapa[1],null,new Rect(size,0,size*2,size),backgroundPaint);
         canvas.drawBitmap(mapa[9],null,new Rect(size*2,0,size*3,size),backgroundPaint);
@@ -57,9 +58,32 @@ public class GameRenderer {
         canvas.drawBitmap(mapa[3],null,new Rect(0,size,size*7,size*3),backgroundPaint);
 
 
-        //kameny uprostřed
-        canvas.drawBitmap(mapa[9],null,new Rect(0,size*3,size*4,size*4),backgroundPaint);
+        //kameny na vodě uprostřed
+        canvas.drawBitmap(mapa[3],null,new Rect(0,size*3,size,size*4),backgroundPaint);
+        canvas.drawBitmap(mapa[3],null,new Rect(size,size*3,size*2,size*4),backgroundPaint);
+        canvas.drawBitmap(mapa[3],null,new Rect(size*2,size*3,size*3,size*4),backgroundPaint);
+        canvas.drawBitmap(mapa[3],null,new Rect(size*3,size*3,size*4,size*4),backgroundPaint);
+        canvas.drawBitmap(mapa[3],null,new Rect(size*4,size*3,size*5,size*4),backgroundPaint);
+        canvas.drawBitmap(mapa[3],null,new Rect(size*5,size*3,size*6,size*4),backgroundPaint);
+        canvas.drawBitmap(mapa[3],null,new Rect(size*6,size*3,size*7,size*4),backgroundPaint);
 
+
+        canvas.drawBitmap(mapa[9],null,new Rect(0,size*3,size,size*4),backgroundPaint);
+        canvas.drawBitmap(mapa[9],null,new Rect(size,size*3,size*2,size*4),backgroundPaint);
+        canvas.drawBitmap(mapa[9],null,new Rect(size*2,size*3,size*3,size*4),backgroundPaint);
+        canvas.drawBitmap(mapa[9],null,new Rect(size*3,size*3,size*4,size*4),backgroundPaint);
+        canvas.drawBitmap(mapa[9],null,new Rect(size*4,size*3,size*5,size*4),backgroundPaint);
+        canvas.drawBitmap(mapa[9],null,new Rect(size*5,size*3,size*6,size*4),backgroundPaint);
+        canvas.drawBitmap(mapa[9],null,new Rect(size*6,size*3,size*7,size*4),backgroundPaint);
+
+        //voda dole
+        canvas.drawBitmap(mapa[3],null,new Rect(0,size*4,size*7,size*6),backgroundPaint);
+        //trava před vodou
+        canvas.drawBitmap(mapa[0],null,new Rect(0,size*6,size*7,size*7),backgroundPaint);
+        //cesta
+        canvas.drawBitmap(mapa[6],null,new Rect(0,size*7,size*7,size*9),backgroundPaint);
+        //start
+        canvas.drawBitmap(mapa[0],null,new Rect(0,size*9,size*7,size*11),backgroundPaint);
 
         if(gameLogic.isUp) {
             //canvas.drawBitmap(mapa[1],0, 0, backgroundPaint);
