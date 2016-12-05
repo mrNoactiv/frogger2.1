@@ -29,7 +29,7 @@ public class Car {
 
     private int posX;
     private int posY;
-    private int speed=10;
+    private int speed=8;
 
 
     EDirection dir;

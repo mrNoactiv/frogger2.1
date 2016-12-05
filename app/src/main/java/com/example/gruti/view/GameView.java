@@ -5,18 +5,14 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
+import android.media.MediaPlayer;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.example.gruti.Objects.Board;
 import com.example.gruti.Objects.Car;
 import com.example.gruti.com.example.gruti.logic.Event;
 import com.example.gruti.com.example.gruti.logic.GameLogic;
@@ -52,6 +48,13 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
                 }
             });
         }
+
+        @Override
+        public void onSoundTrigger(int a ) {
+            MediaPlayer mp=MediaPlayer.create(getContext(),a);
+            mp.start();
+            mp.
+        }
     };
 
 
@@ -64,6 +67,8 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
         drawingThread = new Thread(this);
         logic = new GameLogic(e);
         logic.cars=new ArrayList<Car>();
+        logic.leftBoards=new ArrayList<Board>();
+        logic.rightBoards=new ArrayList<Board>();
         renderer = new GameRenderer(metrics.widthPixels, metrics.heightPixels, logic,bmp);
         holder = getHolder();
 
@@ -97,19 +102,19 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
         switch (eventAction) {
             case MotionEvent.ACTION_DOWN:
 
-                if(y<=500)
+                if(y<=408)
                 {
                     logic.hero.turnUp();
                 }
-                else if(y>=600)
+                else if(y>=715)
                 {
                     logic.hero.turnDown();
                 }
-                else if(x<=350)
+                else if(x<=357)
                 {
                     logic.hero.turnLeft();
                 }
-                else if(x>=400)
+                else if(x>=358)
                 {
                     logic.hero.turnRight();
                 }
@@ -121,7 +126,6 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 
     public void start(){
-        logic.cars.add(new Car(102*6,102*8));
         isRunning = true;
         drawingThread.start();
     }

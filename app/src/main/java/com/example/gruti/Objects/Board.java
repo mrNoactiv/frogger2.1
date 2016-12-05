@@ -14,7 +14,7 @@ public class Board {
 
         private int posX;
         private int posY;
-
+        private int speed=2;
 
         private EDirection dir;
 
@@ -28,11 +28,11 @@ public class Board {
 
         public void moveBoardLeft()
         {
-            posX=posX-10;
+            posX=posX-speed;
         }
         public void moveBoardRight()
         {
-            posX=posX+10;
+            posX=posX+speed;
         }
 
 
@@ -46,6 +46,7 @@ public class Board {
         {
             return posY;
         }
+        public int getSpeed(){return speed;}
 
         public EDirection getDir() {
             return dir;
