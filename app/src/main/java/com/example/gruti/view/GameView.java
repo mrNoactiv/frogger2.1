@@ -17,9 +17,12 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.example.gruti.Objects.Car;
 import com.example.gruti.com.example.gruti.logic.Event;
 import com.example.gruti.com.example.gruti.logic.GameLogic;
 import com.example.gruti.frogger21.R;
+
+import java.util.ArrayList;
 
 public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Callback
 {
@@ -29,22 +32,21 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
     private GameLogic logic;
     private GameRenderer renderer;
     private boolean canDraw;
-    Bitmap[] bmp;
-    public Handler mHandler;
-    Message m;
+    private Bitmap[] bmp;
+    private int gameTime;
 
 
 
     Event e=new Event() {
         @Override
-        public void onDeathListener(String s) {
+        public void onDeathListener(final String message) {
             post(new Runnable() {
                 @Override
                 public void run() {
                     Context context = getContext();
                     int duration = Toast.LENGTH_SHORT;
 
-                    Toast toast = Toast.makeText(context, "You are ded", duration);
+                    Toast toast = Toast.makeText(context,message , duration);
                     toast.show();
 
                 }
@@ -61,6 +63,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
         init(context);
         drawingThread = new Thread(this);
         logic = new GameLogic(e);
+        logic.cars=new ArrayList<Car>();
         renderer = new GameRenderer(metrics.widthPixels, metrics.heightPixels, logic,bmp);
         holder = getHolder();
 
@@ -118,6 +121,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 
     public void start(){
+        logic.cars.add(new Car(102*6,102*8));
         isRunning = true;
         drawingThread.start();
     }
@@ -127,8 +131,9 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
     public void run() {
 
         while(this.isRunning){
+            gameTime++;
             if(holder.getSurface().isValid()) {
-                if (logic.update()!=true)//přepočet)
+                if (logic.update(gameTime)!=true)//přepočet)
                 {
 
                     Restart();

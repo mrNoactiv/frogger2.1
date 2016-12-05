@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 
+import com.example.gruti.Objects.Car;
 import com.example.gruti.com.example.gruti.logic.GameLogic;
 import com.example.gruti.frogger21.R;
 
@@ -92,10 +93,12 @@ public class GameRenderer {
 
         //vykreslování žaby
         canvas.drawBitmap(mapa[4],null,new Rect(gameLogic.hero.getPosX(),gameLogic.hero.getPosY(),gameLogic.hero.getPosX()+size,gameLogic.hero.getPosY()+size),backgroundPaint);
+        //vykreslovaní levých aut
 
-
-
-
+        for (Car car:gameLogic.cars)
+        {
+            canvas.drawBitmap(mapa[8],null,new Rect(car.getPosX(),car.getPosY(),car.getPosX()+size,car.getPosY()+size),backgroundPaint);
+        }
 
         }
 
