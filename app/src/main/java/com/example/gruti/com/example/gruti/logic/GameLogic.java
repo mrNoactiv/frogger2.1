@@ -1,19 +1,11 @@
 package com.example.gruti.com.example.gruti.logic;
 
 
-import android.content.Context;
-import android.graphics.Rect;
-import android.media.MediaPlayer;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.widget.Toast;
-
 import com.example.gruti.Objects.Board;
 import com.example.gruti.Objects.Car;
 import com.example.gruti.Objects.Fly;
 import com.example.gruti.Objects.Hero;
 import com.example.gruti.frogger21.R;
-import com.example.gruti.view.GameView;
 
 import java.util.Iterator;
 import java.util.List;
@@ -22,11 +14,10 @@ public class GameLogic {
 
 
     Event event;
-    MediaPlayer mediaPlayer;
 
-    int level=2;
-    int gameScore=0;
-    int lifes=3;
+    private int level;
+    private int gameScore=0;
+    private int lifes=3;
 
     //pozice žaby
     private int posX=102*3;
@@ -34,9 +25,14 @@ public class GameLogic {
     public Hero hero= new Hero(posX,posY,3);
 
     //list aut
-    public List<Car> cars;
+    public List<Car> leftCars;
     private int leftCarPosX=102*6;
     private int lefCarPosY=102*8;
+
+    public List<Car> rightCars;
+    private int rightCarPosX=-102;
+    private int rightCarPosY=102*7;
+
 
     //moucha
     public Fly fly=new Fly(102*2,0);
@@ -46,9 +42,10 @@ public class GameLogic {
     public List<Board> leftBoards;
     public List<Board> rightBoards;
 
-    public GameLogic(Event event)
+    public GameLogic(Event event,int level)
     {
         this.event=event;
+        this.level=level;
     }
 
 
@@ -76,16 +73,21 @@ public class GameLogic {
 
     }
 
+    public void setLevel(int level)
+    {
+        this.level=level;
+    }
+
 
     public boolean checkBounds()
     {
         boolean ok=true;
 
-        if(hero.getPosX()>612 || hero.getPosX()<0)
+        if(hero.getPosX()>612 || hero.getPosX()<0 || hero.getPosY()>1100 || hero.getPosY()<=102)
         {
             ok=false;
             event.onDeathListener("Spadl jsi z platformy.");
-            event.onSoundTrigger(R.raw.sound_frogger_squash);
+            event.onSoundTrigger(R.raw.fall);
         }
         return ok;
     }
@@ -103,6 +105,7 @@ public class GameLogic {
             else
             {
                 event.onDeathListener("Neumíš plavat");
+                event.onSoundTrigger(R.raw.water);
                 ok=false;
             }
 
@@ -117,15 +120,30 @@ public class GameLogic {
         boolean ok=true;
 
 
-        for(Iterator<Car> carsIterator = cars.iterator(); carsIterator.hasNext();) {
-            Car car = (Car) carsIterator.next();
+        for(Iterator<Car> leftCarsIterator = leftCars.iterator(); leftCarsIterator.hasNext();) {
+            Car car = (Car) leftCarsIterator.next();
 
-            if ((hero.getPosX() >= car.getPosX() && hero.getPosX() <= car.getPosX() + 50) && hero.getPosY() == car.getPosY()) {
+            if ((hero.getPosX() >= car.getPosX() && hero.getPosX() <= car.getPosX() + 70) && hero.getPosY() == car.getPosY()) {
                 ok = false;
                 event.onDeathListener("Srazilo tě auto");
+                event.onSoundTrigger(R.raw.splat);
+            }
+        }
+
+        for(Iterator<Car> rightCarsIterator = rightCars.iterator(); rightCarsIterator.hasNext();) {
+            Car car = (Car) rightCarsIterator.next();
+
+            if ((hero.getPosX() >= car.getPosX() && hero.getPosX() <= car.getPosX() + 70) && hero.getPosY() == car.getPosY()) {
+                ok = false;
+                event.onDeathListener("Srazilo tě auto");
+                event.onSoundTrigger(R.raw.splat);
             }
         }
         return ok;
+
+
+
+
     }
 
     public boolean checkFly()
@@ -134,9 +152,11 @@ public class GameLogic {
         if( (hero.getPosX()>=fly.getPosX() && hero.getPosX()<=fly.getPosX()+50 ) && hero.getPosY()==fly.getPosY())
         {
             hit=true;
-            gameScore++;
+            gameScore=gameScore+(1*level);
+            event.onDeathListener("Score +"+1*level);
             hero.setPosX(posX);
             hero.setPosY(posY);
+            event.onSoundTrigger(R.raw.bite);
         }
         return hit;
     }
@@ -149,6 +169,7 @@ public class GameLogic {
         if(((x >=0 && x<=102+30)||    (x>=(102*3-30)&& x<=(102*3+30))     ||     (x>=(102*6-30)&& x<=(102*6+30))    )&& y==0)
         {
             event.onDeathListener("Hoříš");
+            event.onSoundTrigger(R.raw.fall);
             ok=false;
         }
         else
@@ -160,14 +181,16 @@ public class GameLogic {
 
     public void spawmCar(int time)
     {
-        if(time%(5*level)==0)//vykreslovani aut
+        if(time%(20)==0)//vykreslovani aut
         {
             int randCar=1 + (int)(Math.random()*5);
             switch(randCar)
             {
                 case 1:
-                    cars.add(new Car(leftCarPosX,lefCarPosY));
+                    leftCars.add(new Car(leftCarPosX,lefCarPosY,level));
                     break;
+                case 2:
+                    rightCars.add(new Car(rightCarPosX,rightCarPosY,level));
 
             }
         }
@@ -175,7 +198,7 @@ public class GameLogic {
 
     public void carLogic()
     {
-        for(Iterator<Car> carsIterator = cars.iterator(); carsIterator.hasNext();)
+        for(Iterator<Car> carsIterator = leftCars.iterator(); carsIterator.hasNext();)
         {
             Car car = (Car) carsIterator.next();
             if(car.getPosX()<-50)
@@ -184,6 +207,19 @@ public class GameLogic {
             }
             car.moveCarLeft();
         }
+        for(Iterator<Car> carsIterator = rightCars.iterator(); carsIterator.hasNext();)
+        {
+            Car car = (Car) carsIterator.next();
+            if(car.getPosX()>800)
+            {
+                carsIterator.remove();
+            }
+            car.moveCarRight();
+        }
+
+
+
+
     }
 
     public void spawmFly(int time)
@@ -218,24 +254,24 @@ public class GameLogic {
 
     public void spawnBoard(int time)
     {
-        if(time%(40*level)==0)
+        if(time%(40)==0)
         {
             int randBoard=1 + (int)(Math.random()*4);//vykreslovani dřev
             switch(randBoard)
             {
                 case 1:
-                    leftBoards.add(new Board(102*6,102*2));
+                    leftBoards.add(new Board(102*6,102*2,level));
 
                     break;
                 case 2:
-                    rightBoards.add(new Board(0,102));
+                    rightBoards.add(new Board(0,102,level));
                     break;
 
                 case 3:
-                    leftBoards.add(new Board(102*6,102*4));
+                    leftBoards.add(new Board(102*6,102*4,level));
                     break;
                 case 4:
-                    rightBoards.add(new Board(0,102*5));
+                    rightBoards.add(new Board(0,102*5,level));
                     break;
             }
         }
@@ -360,7 +396,17 @@ public class GameLogic {
 
     }
 
+    public int getLevel()
+    {
+        return level;
+    }
+    public int getScore()
+    {
+        return gameScore;
+    }
 
-
-
+    public int getLifes()
+    {
+        return lifes;
+    }
 }

@@ -10,10 +10,6 @@ import android.graphics.Rect;
 import com.example.gruti.Objects.Board;
 import com.example.gruti.Objects.Car;
 import com.example.gruti.com.example.gruti.logic.GameLogic;
-import com.example.gruti.frogger21.R;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class GameRenderer {
@@ -23,7 +19,10 @@ public class GameRenderer {
     private Paint backgroundPaint;
     int size=102;
     Bitmap[] mapa;
-    Map<Integer, Bitmap> bitmapBank = new HashMap<>();//dis
+
+
+    //laout
+
 
 
 
@@ -94,9 +93,14 @@ public class GameRenderer {
 
         //vykreslovaní levých aut
 
-        for (Car car : gameLogic.cars) {
+        for (Car car : gameLogic.leftCars) {
             canvas.drawBitmap(mapa[8], null, new Rect(car.getPosX(), car.getPosY(), car.getPosX() + size, car.getPosY() + size), backgroundPaint);
         }
+        for (Car car : gameLogic.rightCars) {
+            canvas.drawBitmap(mapa[7], null, new Rect(car.getPosX(), car.getPosY(), car.getPosX() + size, car.getPosY() + size), backgroundPaint);
+        }
+
+
         //vykreslovani mouchy
         canvas.drawBitmap(mapa[5], null, new Rect(gameLogic.fly.getPosX(), gameLogic.fly.getPosY(), gameLogic.fly.getPosX() + size, gameLogic.fly.getPosY() + size), backgroundPaint);
 
@@ -112,5 +116,10 @@ public class GameRenderer {
 
         //vykreslování žaby
         canvas.drawBitmap(mapa[4], null, new Rect(gameLogic.hero.getPosX(), gameLogic.hero.getPosY(), gameLogic.hero.getPosX() + size, gameLogic.hero.getPosY() + size), backgroundPaint);
+        backgroundPaint.setTextSize(40);
+        backgroundPaint.setColor(Color.RED);
+        canvas.drawText("Score: "+gameLogic.getScore(),550,980,backgroundPaint);
+        canvas.drawText("Lifes: "+gameLogic.getLifes(),550,1020,backgroundPaint);
+
     }
     }

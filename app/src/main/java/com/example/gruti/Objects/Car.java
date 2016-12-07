@@ -11,41 +11,34 @@ package com.example.gruti.Objects;
  */
 
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-
-import com.example.gruti.com.example.gruti.logic.EDirection;
-import com.example.gruti.frogger21.R;
-
 /**
  *
  * @author Tomáš
  */
 public class Car {
 
-    private static final int carX=40;
-    private static final int carY=40;
+    private static final int carX = 40;
+    private static final int carY = 40;
 
     private int posX;
     private int posY;
-    private int speed=8;
+    private int dificulty;
 
 
-    EDirection dir;
-
-    public Car(int posX,int posY)
-    {
-        this.posX=posX;
-        this.posY=posY;
+    public Car(int posX, int posY,int dificulty) {
+        this.posX = posX;
+        this.posY = posY;
+        this.dificulty=dificulty;
     }
 
 
+    public void moveCarLeft() {
 
-    public void moveCarLeft()
-    {
+        posX = posX - (4*dificulty);
+    }
 
-        posX=posX-speed;
+    public void moveCarRight() {
+        posX = posX + (4*dificulty);
     }
 
 
@@ -58,14 +51,6 @@ public class Car {
     public int getPosY()
     {
         return posY;
-    }
-
-    public EDirection getDir() {
-        return dir;
-    }
-
-    public void setDir(EDirection dir) {
-        this.dir = dir;
     }
 
 

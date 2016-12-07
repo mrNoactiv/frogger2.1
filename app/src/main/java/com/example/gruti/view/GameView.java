@@ -2,10 +2,13 @@ package com.example.gruti.view;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.media.AudioAttributes;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -33,6 +36,20 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 
 
+    //audio
+    //private MediaPlayer mediaPlayer=MediaPlayer.create(getContext(),R.raw.jump);
+    AudioAttributes aa=new AudioAttributes.Builder()
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .setUsage(AudioAttributes.USAGE_GAME)
+            .build();
+
+    SoundPool jumpSound=new SoundPool.Builder()
+            .setMaxStreams(5)
+            .setAudioAttributes(aa)
+            .build();
+
+    int jumpID=jumpSound.load(getContext(),R.raw.jump,2);
+
     Event e=new Event() {
         @Override
         public void onDeathListener(final String message) {
@@ -51,9 +68,20 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
         @Override
         public void onSoundTrigger(int a ) {
+
             MediaPlayer mp=MediaPlayer.create(getContext(),a);
             mp.start();
-            mp.
+
+
+
+/*
+            SoundPool sp=new SoundPool.Builder()
+                    .setMaxStreams(5)
+                    .setAudioAttributes(aa)
+                    .build();
+
+            sp.load(getContext(),a,1);
+            sp.play(1,1,1,2,0,1);*/
         }
     };
 
@@ -61,12 +89,13 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 
 
-    public GameView(Context context, DisplayMetrics metrics) {
+    public GameView(Context context, DisplayMetrics metrics,int level) {
         super(context);
         init(context);
         drawingThread = new Thread(this);
-        logic = new GameLogic(e);
-        logic.cars=new ArrayList<Car>();
+        logic = new GameLogic(e,level);
+        logic.leftCars =new ArrayList<Car>();
+        logic.rightCars=new ArrayList<Car>();
         logic.leftBoards=new ArrayList<Board>();
         logic.rightBoards=new ArrayList<Board>();
         renderer = new GameRenderer(metrics.widthPixels, metrics.heightPixels, logic,bmp);
@@ -74,6 +103,12 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 
     }
+
+    public void jumpSound()
+    {
+        jumpSound.play(jumpID,1,1,1,0,1);
+    }
+
 
     void init(Context context) {
         bmp = new Bitmap[11];
@@ -105,18 +140,25 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
                 if(y<=408)
                 {
                     logic.hero.turnUp();
+                    jumpSound();
                 }
                 else if(y>=715)
                 {
                     logic.hero.turnDown();
+                    jumpSound();
+
                 }
                 else if(x<=357)
                 {
                     logic.hero.turnLeft();
+                    jumpSound();
+
                 }
                 else if(x>=358)
                 {
                     logic.hero.turnRight();
+                    jumpSound();
+
                 }
                 break;
         }

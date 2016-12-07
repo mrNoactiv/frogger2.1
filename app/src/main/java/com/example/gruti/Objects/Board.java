@@ -1,7 +1,5 @@
 package com.example.gruti.Objects;
 
-import com.example.gruti.com.example.gruti.logic.EDirection;
-
 /**
  * Created by gruti on 05.12.2016.
  */
@@ -14,26 +12,24 @@ public class Board {
 
         private int posX;
         private int posY;
-        private int speed=2;
+        private int dificulty;
 
-        private EDirection dir;
 
-        public Board(int posX,int posY)
+
+        public Board(int posX,int posY,int dificulty)
         {
             this.posX=posX;
             this.posY=posY;
+            this.dificulty=dificulty;
         }
 
 
 
         public void moveBoardLeft()
         {
-            posX=posX-speed;
+            posX=posX-(2*dificulty);
         }
-        public void moveBoardRight()
-        {
-            posX=posX+speed;
-        }
+        public void moveBoardRight(){ posX=posX+(2*dificulty);}
 
 
 
@@ -46,15 +42,8 @@ public class Board {
         {
             return posY;
         }
-        public int getSpeed(){return speed;}
+        public int getSpeed(){return (2*dificulty);}
 
-        public EDirection getDir() {
-            return dir;
-        }
-
-        public void setDir(EDirection dir) {
-            this.dir = dir;
-        }
 
 
     }
