@@ -83,7 +83,7 @@ public class GameLogic {
     {
         boolean ok=true;
 
-        if(hero.getPosX()>612 || hero.getPosX()<0 || hero.getPosY()>1100 || hero.getPosY()<=102)
+        if(hero.getPosX()>612 || hero.getPosX()<0 || hero.getPosY()>1100 || hero.getPosY()<=-102)
         {
             ok=false;
             event.onDeathListener("Spadl jsi z platformy.");
