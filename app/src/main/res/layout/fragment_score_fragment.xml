@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="500dp"
+    android:layout_height="400dp"
+    tools:context="ScoreFragment"
+    android:background="@color/place_autocomplete_prediction_secondary_text"
+
+    >
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/nameText"
+        android:layout_above="@+id/sendScoreBtn"
+        android:layout_alignStart="@+id/textViewFragment" />
+
+    <TextView
+        android:text="Score:"
+        android:layout_width="224dp"
+        android:layout_height="35dp"
+        android:id="@+id/textViewFragment"
+        android:layout_above="@+id/nameText"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="93dp" />
+
+    <Button
+        android:text="Send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sendScoreBtn"
+        android:layout_marginStart="43dp"
+        android:layout_marginBottom="135dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/nameText" />
+</RelativeLayout>

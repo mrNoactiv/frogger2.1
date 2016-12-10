@@ -2,7 +2,6 @@ package com.example.gruti.view;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -17,7 +16,7 @@ import android.widget.Toast;
 
 import com.example.gruti.Objects.Board;
 import com.example.gruti.Objects.Car;
-import com.example.gruti.com.example.gruti.logic.Event;
+import com.example.gruti.com.example.gruti.logic.logicEvents;
 import com.example.gruti.com.example.gruti.logic.GameLogic;
 import com.example.gruti.frogger21.R;
 
@@ -33,6 +32,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
     private boolean canDraw;
     private Bitmap[] bmp;
     private int gameTime;
+    viewEvents viewEvents;
 
 
 
@@ -50,7 +50,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
     int jumpID=jumpSound.load(getContext(),R.raw.jump,2);
 
-    Event e=new Event() {
+    logicEvents e=new logicEvents() {
         @Override
         public void onDeathListener(final String message) {
             post(new Runnable() {
@@ -89,7 +89,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
 
 
-    public GameView(Context context, DisplayMetrics metrics,int level) {
+    public GameView(Context context, DisplayMetrics metrics,int level,viewEvents vE) {
         super(context);
         init(context);
         drawingThread = new Thread(this);
@@ -100,6 +100,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
         logic.rightBoards=new ArrayList<Board>();
         renderer = new GameRenderer(metrics.widthPixels, metrics.heightPixels, logic,bmp);
         holder = getHolder();
+        this.viewEvents=vE;
 
 
     }
@@ -184,6 +185,13 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
 
                     Restart();
                 }
+                if(logic.checkLives()==false)
+                {
+
+                    viewEvents.onZeroLifes(logic.getScore());
+                    this.stop();
+                }
+
                 Canvas canvas = holder.lockCanvas();
                 renderer.draw(canvas);
                 holder.unlockCanvasAndPost(canvas);
@@ -213,6 +221,7 @@ public class GameView extends SurfaceView implements Runnable, SurfaceHolder.Cal
         isRunning=true;
 
     }
+
 
 
     @Override

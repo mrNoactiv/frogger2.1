@@ -13,7 +13,7 @@ import java.util.List;
 public class GameLogic {
 
 
-    Event event;
+    logicEvents event;
 
     private int level;
     private int gameScore=0;
@@ -42,7 +42,7 @@ public class GameLogic {
     public List<Board> leftBoards;
     public List<Board> rightBoards;
 
-    public GameLogic(Event event,int level)
+    public GameLogic(logicEvents event, int level)
     {
         this.event=event;
         this.level=level;
@@ -73,10 +73,19 @@ public class GameLogic {
 
     }
 
-    public void setLevel(int level)
+    public boolean checkLives()
     {
-        this.level=level;
+        boolean alive=true;
+        if(this.lifes==0)
+        {
+            alive=false;
+        }
+        else
+            alive=true;
+
+        return alive;
     }
+
 
 
     public boolean checkBounds()

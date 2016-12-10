@@ -8,9 +8,10 @@ import android.net.Uri;
  * Created by gruti on 04.12.2016.
  */
 
-public interface Event {
+public interface logicEvents {
 
     public void onDeathListener(String s) ;
     public void onSoundTrigger(int a);
+
 
     }
