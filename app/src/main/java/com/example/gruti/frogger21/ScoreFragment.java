@@ -14,6 +14,7 @@ import android.widget.TextView;
 public class ScoreFragment extends Fragment {
     int score;
     TextView mTextView;
+    TextView nulove;
     public ScoreFragment()
     {
 
@@ -39,6 +40,11 @@ public class ScoreFragment extends Fragment {
     public TextView getTextView(){
 
         return mTextView;
+    }
+
+    public void setTextViewText(String value){
+        mTextView.setText(value);
+
     }
 
 

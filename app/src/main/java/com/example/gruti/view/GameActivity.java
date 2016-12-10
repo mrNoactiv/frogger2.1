@@ -24,11 +24,11 @@ public class GameActivity extends AppCompatActivity {
     FrameLayout game;
     RelativeLayout gameWidgets;
     boolean gameEnded=false;
-    TextView tv;
+
+
     viewEvents viewEvents=new viewEvents() {
         @Override
-        public void onZeroLifes(int score) {
-
+        public void onZeroLifes(final int score) {
 
             gameEnded=true;
 
@@ -36,18 +36,24 @@ public class GameActivity extends AppCompatActivity {
 
             FragmentManager fM=getFragmentManager();
             FragmentTransaction fT=fM.beginTransaction();
-            ScoreFragment sFR;
+
+            final ScoreFragment sFR;
             sFR=new ScoreFragment();
-            sFR.setScore(score);
-            TextView textView;
-            textView=sFR.getTextView();
-            textView.setText("Score: "+score);
 
             fT.add(gameWidgets.getId(),sFR);
             fT.commit();
 
+            sFR.setScore(score);
 
 
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    sFR.setTextViewText("Score: "+score );
+
+                }
+            });
         }
     };
 

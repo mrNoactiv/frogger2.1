@@ -20,7 +20,6 @@
         android:layout_alignStart="@+id/textViewFragment" />
 
     <TextView
-        android:text="Score:"
         android:layout_width="224dp"
         android:layout_height="35dp"
         android:id="@+id/textViewFragment"

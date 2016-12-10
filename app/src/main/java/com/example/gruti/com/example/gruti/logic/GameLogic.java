@@ -158,7 +158,7 @@ public class GameLogic {
     public boolean checkFly()
     {
         boolean hit=false;
-        if( (hero.getPosX()>=fly.getPosX() && hero.getPosX()<=fly.getPosX()+50 ) && hero.getPosY()==fly.getPosY())
+        if( (hero.getPosX()>=fly.getPosX() && hero.getPosX()<=fly.getPosX()+102 ) && hero.getPosY()==fly.getPosY())
         {
             hit=true;
             gameScore=gameScore+(1*level);
