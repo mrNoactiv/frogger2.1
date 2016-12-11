@@ -29,7 +29,7 @@ public class MainMenu extends AppCompatActivity {
                 System.exit(0);
             }
         });
-        //exit apky
+        /*//exit apky
         Button bF = (Button) findViewById(R.id.fragmentBtn);
         bF.setOnClickListener(new View.OnClickListener() {
 
@@ -41,7 +41,7 @@ public class MainMenu extends AppCompatActivity {
                 fT.add(R.id.activity_main_menu,sFR);
                 fT.commit();
             }
-        });
+        });*/
 
     }
 

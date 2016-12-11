@@ -41,12 +41,5 @@
         android:layout_below="@+id/bScore"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bExit"
-        android:layout_alignEnd="@+id/bNewGame"
-        android:layout_marginTop="20dp"
-        android:id="@+id/fragmentBtn"
-        android:layout_width="wrap_content"
-        android:text="fragment" />
+
 </RelativeLayout>

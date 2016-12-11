@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -17,6 +18,13 @@ import android.widget.TextView;
 import com.example.gruti.com.example.gruti.logic.GameLogic;
 import com.example.gruti.frogger21.R;
 import com.example.gruti.frogger21.ScoreFragment;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -32,8 +40,9 @@ public class GameActivity extends AppCompatActivity {
 
             gameEnded=true;
 
-            gameWidgets.setId(R.id.fragment);
 
+
+            gameWidgets.setId(R.id.fragment);
             FragmentManager fM=getFragmentManager();
             FragmentTransaction fT=fM.beginTransaction();
 
@@ -49,8 +58,17 @@ public class GameActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    String name;
+                    sFR.setTextViewText("You are dead.Your score is "+score );
+                    sFR.getScoreButton().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            WriteFile(sFR.getEditText(),score);
+                            finish();
+                            System.exit(0);
 
-                    sFR.setTextViewText("Score: "+score );
+                        }
+                    });
 
                 }
             });
@@ -96,4 +114,42 @@ public class GameActivity extends AppCompatActivity {
         gameView.stop();
         super.onPause();
     }
+
+    public void WriteFile(String name,int score)
+    {
+        try {
+            String content = name+","+score;
+            String filePath = getFilesDir().getPath() + "/HighScore.csv";
+            String firstLine;
+            File file = new File(filePath);
+            // if file doesnt exists, then create it
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            FileWriter fw = new FileWriter(file,true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            BufferedReader br = new BufferedReader(new FileReader(filePath));
+
+            if(( firstLine= br.readLine()) != null)
+            {
+                bw.newLine();
+                bw.write(content);
+            }
+            else
+                bw.write(content);
+
+            bw.close();
+            br.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+
+
 }

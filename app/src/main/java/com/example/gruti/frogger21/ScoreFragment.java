@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -14,7 +16,8 @@ import android.widget.TextView;
 public class ScoreFragment extends Fragment {
     int score;
     TextView mTextView;
-    TextView nulove;
+    EditText mEditText;
+    Button mButton;
     public ScoreFragment()
     {
 
@@ -28,6 +31,9 @@ public class ScoreFragment extends Fragment {
         //return inflater.inflate(R.layout.fragment_score_fragment,container,false);
         View view = inflater.inflate(R.layout.fragment_score_fragment, container, false);
         mTextView = (TextView) view.findViewById(R.id.textViewFragment);
+        mEditText=(EditText)view.findViewById(R.id.nameText);
+        mButton = (Button) view.findViewById(R.id.sendScoreBtn);
+
         return view;
 
     }
@@ -37,9 +43,9 @@ public class ScoreFragment extends Fragment {
         this.score=score;
     }
 
-    public TextView getTextView(){
+    public String getEditText(){
 
-        return mTextView;
+        return mEditText.getText().toString();
     }
 
     public void setTextViewText(String value){
@@ -47,5 +53,9 @@ public class ScoreFragment extends Fragment {
 
     }
 
+    public Button getScoreButton()
+    {
+        return mButton;
+    }
 
 }
