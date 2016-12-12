@@ -158,11 +158,19 @@ public class GameLogic {
     public boolean checkFly()
     {
         boolean hit=false;
-        if( (hero.getPosX()>=fly.getPosX() && hero.getPosX()<=fly.getPosX()+102 ) && hero.getPosY()==fly.getPosY())
+        if( (hero.getPosX()+102>=fly.getPosX() && hero.getPosX()-30<=fly.getPosX() ) && hero.getPosY()==fly.getPosY())
         {
             hit=true;
-            gameScore=gameScore+(1*level);
-            event.onDeathListener("Score +"+1*level);
+            if(level==3)
+            {
+                gameScore=gameScore+5;
+                event.onDeathListener("Score +"+5);
+            }
+            else {
+                gameScore = gameScore + (1 * level);
+                event.onDeathListener("Score +"+1*level);
+            }
+
             hero.setPosX(posX);
             hero.setPosY(posY);
             event.onSoundTrigger(R.raw.bite);
@@ -263,24 +271,36 @@ public class GameLogic {
 
     public void spawnBoard(int time)
     {
-        if(time%(40)==0)
+        int temp;
+        if(level==1)
+        {
+            temp=90;
+        }
+        else if(level==2)
+        {
+            temp=50;
+        }
+        else
+        temp=30;
+
+        if(time%(temp)==0)
         {
             int randBoard=1 + (int)(Math.random()*4);//vykreslovani dřev
             switch(randBoard)
             {
                 case 1:
-                    leftBoards.add(new Board(102*6,102*2,level));
+                    leftBoards.add(new Board((102*7),102*2,level));
 
                     break;
                 case 2:
-                    rightBoards.add(new Board(0,102,level));
+                    rightBoards.add(new Board(-102,102,level));
                     break;
 
                 case 3:
-                    leftBoards.add(new Board(102*6,102*4,level));
+                    leftBoards.add(new Board((102*6),102*4,level));
                     break;
                 case 4:
-                    rightBoards.add(new Board(0,102*5,level));
+                    rightBoards.add(new Board(-102,102*5,level));
                     break;
             }
         }
@@ -292,7 +312,7 @@ public class GameLogic {
         for(Iterator<Board> leftBoardIteratorMove = leftBoards.iterator(); leftBoardIteratorMove.hasNext();)
         {
             Board board = (Board) leftBoardIteratorMove.next();
-            if(board.getPosX()<-102)
+            if(board.getPosX()<-204)
             {
                 leftBoardIteratorMove.remove();
             }
@@ -309,7 +329,7 @@ public class GameLogic {
         {
             Board board = (Board) rightBoardIteratorMove.next();
 
-            if(board.getPosX()>800)
+            if(board.getPosX()>900)
             {
                 rightBoardIteratorMove.remove();
             }
